@@ -1,0 +1,16 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+# Dependency directories
+node_modules/
+
+# build files
+dist/
+static/app.bundle.js
+static/app.bundle.js.map
+static/vendor.bundle.js
+static/vendor.bundle.js.map
+
+# Packages-lock
+package-lock.json
