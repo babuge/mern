@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Redirect, IndexRoute, browserHistory, withRouter } from 'react-router';
+import { Router, Route, Redirect, Link, IndexRoute, browserHistory, withRouter } from 'react-router';
 
 import IssueList from './IssueList.jsx';
 import IssueEdit from './IssueEdit.jsx';
 
 const root = document.getElementById('root');
 const NoMatch = () => <p>Page Not Found</p>;
-const Dashboard = () => <p>home page!</p>;
+const Dashboard = () => <p><Link to="/issues">home page! </Link> </p>;
 const App = (props) => (
   <div>
     <div className="header">
