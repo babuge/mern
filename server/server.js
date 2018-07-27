@@ -13,7 +13,7 @@ app.use(express.static('static'));
 app.use(bodyParser.json()); // bodyParser.json()创建中间件 并用 app.use()在应用层应用它
 
 let db;
-MongoClient.connect('mongodb://47.92.70.234:27017/issuetracker').then(connection => {
+MongoClient.connect('mongodb://localhost:27017/issuetracker').then(connection => {
   db = connection;
   app.listen(3000, () => {
     console.log('App started on port 3000');
