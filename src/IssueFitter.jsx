@@ -49,7 +49,7 @@ export default class IssueFilter extends React.Component { // eslint-disable-lin
 
   onChangeEffortLte(e) {
     const effortString = e.target.value;
-    if (effortString.match(/^d*$/)) {
+    if (effortString.match(/^\d*$/)) {
       this.setState({ effort_lte: e.target.value, changed: true});
     }
   }
@@ -87,7 +87,7 @@ export default class IssueFilter extends React.Component { // eslint-disable-lin
         &nbsp;Effort between:
         <input size={5} value={this.state.effort_gte} onChange={this.onChangeEfforGte} />
         &nbsp;-&nbsp;
-        <input size={5} value={this.state.effort_lte} onChange={this.onChangeEffortLte}/>
+        <input size={5} value={this.state.effort_lte} onChange={this.onChangeEffortLte} />
         <button onClick={this.applyFilter}>Apply</button>
         <button onClick={this.resetFilter} disabled={!this.state.changed}>Reset</button>
         <button onClick={this.clearFilter}>Clear</button>     
