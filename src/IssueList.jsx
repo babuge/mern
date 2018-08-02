@@ -121,7 +121,11 @@ export default class IssueList extends React.Component {
     });
   }
   loadDatas() { // get issues
-    fetch('/api/faceConstrat').then(response => {
+    fetch('/api/faceConstrat',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:JSON.stringify({test:123}) ,
+    }).then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log('faceConstrat:', data);

@@ -5,9 +5,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 import Issue from './issue.js';
-import { request } from 'request';
-import { url } from 'url';
-import { crypto } from 'crypto';
+import Config from './config.js';
+import request from 'request';
+import url  from 'url';
+import crypto  from 'crypto';
 SourceMapSupport.install(); // 源映射显示行号
 
 const app = express();
@@ -15,9 +16,9 @@ app.use(express.static('static'));
 app.use(bodyParser.json()); // bodyParser.json()创建中间件 并用 app.use()在应用层应用它
 
 let db;
-MongoClient.connect('mongodb://localhost:27017/issuetracker').then(connection => {
+MongoClient.connect('mongodb://'+Config.mongodb.url).then(connection => {
   db = connection;
-  app.listen(3000, () => {
+  app.listen(Config.mongodb.port, () => {
     console.log('App started on port 3000');
   });
 }).catch(err => {
@@ -76,16 +77,19 @@ app.post('/api/issues', (req, res) => {
   });
 });
 
-app.get('/api/faceConstrat', (req, res) => {
-  console.log(1);
-  console.log(req.body);
-  const akId = 'LTA..4xZX';
-  const akSecret = 'YvJN4..btq';
-  const date = new Date().toUTCString();
+app.post('/api/faceConstrat', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods","POST");
+  res.header("X-Powered-By",' 3.2.1')
+  res.header("Content-Type", "application/json;charset=utf-8");
+  const akId = Config.authorAccessKey.keyId;
+  const akSecret = Config.authorAccessKey.keyValue;
+  let date = new Date().toUTCString();
   const options = {
-    url: '/face/verify',
-    method: 'GET',
-    body: { test: '123' },
+    url: Config.faceContrastHost + '/face/verify',
+    method: 'POST',
+    body: JSON.stringify(req.body),
     headers: {
       'accept': "application/json", // eslint-disable-line
       "content-type": "application/json", // eslint-disable-line
@@ -115,14 +119,14 @@ app.get('/api/faceConstrat', (req, res) => {
   url.parse(options.url).path;
 
   const signature = sha1(stringToSign, akSecret);
-  const authHeader = 'Dataplus' + akId + ':' + signature;
+  const authHeader = 'Dataplus ' + akId + ':' + signature;
   options.headers.Authorization = authHeader;
   const callback = (error, response, body) => {
     if (error) {
       console.log('error', error);
       res.status(500).json({ message: `Internal Server Error: ${error}` });
+      return;
     }
-    console.log('stop4:', response.statusCode, body);
     const sendData = {
       responseCode: response.statusCode,
       bodyData: body,
@@ -132,7 +136,7 @@ app.get('/api/faceConstrat', (req, res) => {
   request(options, callback);
 });
 
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('static/index.html'));
 });
-
