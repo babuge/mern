@@ -24,36 +24,34 @@ export default class IssueFilter extends React.Component { // eslint-disable-lin
       effort_gte: newProps.initFilter.effort_gte || '',
       effort_lte: newProps.initFilter.effort_lte || '',
       changed: false,
-    })
-  }
-
-  resetFilter() {
-    this.setState({
-      status: this.props.initFilter.status || '',
-      effort_gte: this.props.initFilter.effort_gte || '',
-      effort_lte: this.props.initFilter.effort_lte || '',
-      changed: false,
-    })
+    });
   }
 
   onChangeStatus(e) {
-    this.setState({status: e.target.value, changed: true});
+    this.setState({ status: e.target.value, changed: true });
   }
 
   onChangeEfforGte(e) {
     const effortString = e.target.value;
     if (effortString.match(/^\d*$/)) {
-      this.setState({ effort_gte: e.target.value, changed: true});
+      this.setState({ effort_gte: e.target.value, changed: true });
     }
   }
 
   onChangeEffortLte(e) {
     const effortString = e.target.value;
     if (effortString.match(/^\d*$/)) {
-      this.setState({ effort_lte: e.target.value, changed: true});
+      this.setState({ effort_lte: e.target.value, changed: true });
     }
   }
-
+  resetFilter() {
+    this.setState({
+      status: this.props.initFilter.status || '',
+      effort_gte: this.props.initFilter.effort_gte || '',
+      effort_lte: this.props.initFilter.effort_lte || '',
+      changed: false,
+    });
+  }
   applyFilter(e) {
     const newFilter = {};
     if (this.state.status) {
@@ -75,7 +73,7 @@ export default class IssueFilter extends React.Component { // eslint-disable-lin
     return (
       <div>
         Status:
-        <select value={this.state.status}  onChange={this.onChangeStatus}>
+        <select value={this.state.status} onChange={this.onChangeStatus}>
           <option value="">Any</option>
           <option value="New">New</option>
           <option value="Open">Open</option>
@@ -90,7 +88,7 @@ export default class IssueFilter extends React.Component { // eslint-disable-lin
         <input size={5} value={this.state.effort_lte} onChange={this.onChangeEffortLte} />
         <button onClick={this.applyFilter}>Apply</button>
         <button onClick={this.resetFilter} disabled={!this.state.changed}>Reset</button>
-        <button onClick={this.clearFilter}>Clear</button>     
+        <button onClick={this.clearFilter}>Clear</button>
       </div>
     );
   }

@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFitter.jsx';
+import FaceApiTest from './FaceApiTest.jsx';
 
 const borderedStyle = { border: '1px solid silver', padding: 4 };
 function IssueTable(props) {
@@ -54,6 +55,7 @@ export default class IssueList extends React.Component {
     this.createIssue = this.createIssue.bind(this);
     // this.loadData();
     this.setFilter = this.setFilter.bind(this);
+    this.loadDatas = this.loadDatas.bind(this);
   }
   componentDidUpdate(prevprops) {
     const oldQuery = prevprops.location.query;
@@ -118,6 +120,21 @@ export default class IssueList extends React.Component {
       alert('Error in sending data to server:'.concat(err.message));
     });
   }
+  loadDatas() { // get issues
+    fetch('/api/faceConstrat').then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          console.log('faceConstrat:', data);
+        });
+      } else {
+        response.json().then(error => {
+          alert('Failed to fetch faceConstrat:'.concat(error.message));
+        });
+      }
+    }).catch(err => {
+      alert('Error in fetching data from server:', err);
+    });
+  }
   render() {
     return (
       <div>
@@ -126,6 +143,8 @@ export default class IssueList extends React.Component {
         <IssueTable issues={this.state.issues} />
         <hr />
         <IssueAdd createIssue={this.createIssue} />
+        <hr />
+        <FaceApiTest loadDatas={this.loadDatas} />
       </div>
     );
   }
