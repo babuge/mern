@@ -147,8 +147,8 @@ export default class IssueList extends React.Component {
         <IssueTable issues={this.state.issues} />
         <hr />
         <IssueAdd createIssue={this.createIssue} />
-        <hr />
-        <FaceApiTest loadDatas={this.loadDatas} />
+        {/* <hr /> */}
+        {/* <FaceApiTest loadDatas={this.loadDatas} /> */}
       </div>
     );
   }

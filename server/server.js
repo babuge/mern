@@ -19,7 +19,7 @@ let db;
 MongoClient.connect('mongodb://'+Config.mongodb.url).then(connection => {
   db = connection;
   app.listen(Config.mongodb.port, () => {
-    console.log('App started on port 3000');
+    console.log('App started on port '+Config.mongodb.port);
   });
 }).catch(err => {
   console.log('ERROR:', err);
@@ -27,6 +27,7 @@ MongoClient.connect('mongodb://'+Config.mongodb.url).then(connection => {
 
 app.get('/api/issues', (req, res) => {
   const filter = {};
+  console.log('a')
   if (req.query.status) {
     filter.status = req.query.status;
   }
