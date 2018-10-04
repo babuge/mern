@@ -8,6 +8,8 @@ import Issue from './issue.js';
 import Config from './config.js';
 import request from 'request';
 import url  from 'url';
+import Util from './util.js';
+import rongCloud from 'rongcloud-sdk';
 import crypto  from 'crypto';
 SourceMapSupport.install(); // 源映射显示行号
 
@@ -19,7 +21,7 @@ let db;
 MongoClient.connect('mongodb://'+Config.mongodb.url).then(connection => {
   db = connection;
   app.listen(Config.mongodb.port, () => {
-    console.log('App started on port '+Config.mongodb.port);
+    console.log('App started on port ' + Config.mongodb.port);
   });
 }).catch(err => {
   console.log('ERROR:', err);
@@ -77,15 +79,45 @@ app.post('/api/issues', (req, res) => {
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
 });
+// register
+app.post('/api/IMRongCloudToken', (req,res) => {
+  res = Util.origin(req,res);
+  const body = req.body;
+  if (!body) {
+    return res.status(400).json({ message: `Bad Request Error: ${body}` });
+  }
+  var filter = {userId:null,userName:null};
+  if(body.type==='U2FsdGVkX19SolPjY5hCQfad7/uT4TJt'){
+    filter = Util.decrypt(filter,body);
+  }else{
+    filter = Util.filter(filter,body);
+  }
+  const akId = Config.IMRongCloudAccessKey.keyId;
+  const akSecret = Config.IMRongCloudAccessKey.keyValue;
+  const RongSDK = rongCloud({appkey:akId,secret:akSecret});
+  const User = RongSDK.User;
+  const user = {
+    id:''+filter.userId,
+    name:''+filter.userName,
+    portrait:'http://api.cn.ronghub.com/user/getToken.json'
+  };
+  console.log(req.body);
+  console.log(filter)
+  console.log(user);
+  User.register(user).then(result => {
+    console.log(result);
+    res.json(result);
+  },err => {
+    console.log(err);
+    res.status(500).json({ message: `Internal Server Error: ${err}` });
+  });
+
+});
 
 app.post('/api/faceConstrat', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Methods","POST");
-  res.header("X-Powered-By",' 3.2.1')
-  res.header("Content-Type", "application/json;charset=utf-8");
-  const akId = Config.authorAccessKey.keyId;
-  const akSecret = Config.authorAccessKey.keyValue;
+  res = Util.origin(req,res);
+  const akId = Config.faceAccessKey.keyId;
+  const akSecret = Config.faceAccessKey.keyValue;
   let date = new Date().toUTCString();
   const options = {
     url: Config.faceContrastHost + '/face/verify',

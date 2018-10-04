@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFitter.jsx';
 import FaceApiTest from './FaceApiTest.jsx';
+import IMRongCloudTest from './IMRongCloudTest.jsx';
 
 const borderedStyle = { border: '1px solid silver', padding: 4 };
 function IssueTable(props) {
@@ -56,6 +57,7 @@ export default class IssueList extends React.Component {
     // this.loadData();
     this.setFilter = this.setFilter.bind(this);
     this.loadDatas = this.loadDatas.bind(this);
+    this.loadIM = this.loadIM.bind(this);
   }
   componentDidUpdate(prevprops) {
     const oldQuery = prevprops.location.query;
@@ -120,7 +122,33 @@ export default class IssueList extends React.Component {
       alert('Error in sending data to server:'.concat(err.message));
     });
   }
-  loadDatas() { // get issues
+
+  loadIM() {
+    const body = {
+      userId:1,
+      userName:'babuge',
+    };
+    fetch('/api/IMRongCloudToken',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:JSON.stringify(body),
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          console.log('IMRongCloudToken:', data);
+        });
+      } else {
+        response.json().then(error => {
+          alert('Failed to fetch IMRongCloudToken:'.concat(error.message));
+        });
+      }
+    }).catch(err => {
+      alert('Error in fetching data from server:', err);
+    });
+  }
+
+
+  loadDatas() { // get face
     fetch('/api/faceConstrat',{
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -147,8 +175,10 @@ export default class IssueList extends React.Component {
         <IssueTable issues={this.state.issues} />
         <hr />
         <IssueAdd createIssue={this.createIssue} />
-        {/* <hr /> */}
-        {/* <FaceApiTest loadDatas={this.loadDatas} /> */}
+        <hr />
+        <FaceApiTest loadDatas={this.loadDatas} />
+        <hr/>
+        <IMRongCloudTest loadIM={this.loadIM} />
       </div>
     );
   }
