@@ -11,6 +11,8 @@ import url  from 'url';
 import Util from './util.js';
 import rongCloud from 'rongcloud-sdk';
 import crypto  from 'crypto';
+import iconvLite from 'iconv-lite';
+
 SourceMapSupport.install(); // 源映射显示行号
 
 const app = express();
@@ -81,7 +83,7 @@ app.post('/api/issues', (req, res) => {
 });
 // register
 app.post('/api/IMRongCloudToken', (req,res) => {
-  res = Util.origin(req,res);
+  // res = Util.origin(req,res);
   const body = req.body;
   if (!body) {
     return res.status(400).json({ message: `Bad Request Error: ${body}` });
@@ -169,6 +171,29 @@ app.post('/api/faceConstrat', (req, res) => {
   request(options, callback);
 });
 
+// app.get('/api/address', (req, res) => { // 返回中文编码有问题！
+//   const ip = Util.ipAddress(req);
+//   const options = {
+//     url: 'http://whois.pconline.com.cn/ipJson.jsp?ip='+'171.214.187.144',
+//     method: 'GET',
+//   };
+//   var callback = (error, response, body) => {
+//     console.log(body.trim());
+//     console.log(newBody.trim());
+//     if (error) {
+//       console.log('error', error);
+//       res.status(500).json({ message: `Internal Server Error: ${error}` });
+//       return;
+//     }
+//     const sendData = {
+//       responseCode: response.statusCode,
+//       bodyData: body,
+//     };
+//     console.log(sendData)
+//     res.json(sendData);
+//   };
+//   request(options, callback);
+// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('static/index.html'));
