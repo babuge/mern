@@ -9,7 +9,7 @@ export default class FaceApiTest extends React.Component {
     this.props.loadDatas();
   }
   render() {
-    const styleString = { backgroundColor: '#aaddaa', height: '80px', width: '180px' };
+    const styleString = { backgroundColor: '#aaddaa', height: '40px',borderRadius: 20, width: '180px' };
     return (
       <div>
         <button style={styleString} onClick={this.selfFun}>Face Cloud</button>

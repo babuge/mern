@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{Component} from 'react';
 // import { Link } from 'react-router';
 
-export default class IssueFilter extends React.Component { // eslint-disable-line
+export default class IssueFilter extends Component { // eslint-disable-line
   constructor(props) {
     super(props);
     this.state = {

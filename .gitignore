@@ -5,13 +5,18 @@ npm-debug.log*
 # Dependency directories
 node_modules/
 
+# config files
+scripts/
+server/config.js
+server/globalOrigin.js
+
 # build files
 dist/
 static/app.bundle.js
 static/app.bundle.js.map
 static/vendor.bundle.js
 static/vendor.bundle.js.map
-
+static/data/
 # Packages-lock
 package-lock.json
 

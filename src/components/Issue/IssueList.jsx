@@ -1,60 +1,17 @@
-import React from 'react';
+import React,{Component} from 'react';
 import 'whatwg-fetch';
-import { Link } from 'react-router';
 
+import IssueTable from './IssueTable.jsx';
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFitter.jsx';
-import FaceApiTest from './FaceApiTest.jsx';
-import IMRongCloudTest from './IMRongCloudTest.jsx';
+import FaceApiTest from '../FaceApi/FaceApiTest.jsx';
+import IMRongCloudTest from '../IMRongCloud/IMRongCloudTest.jsx';
 
-const borderedStyle = { border: '1px solid silver', padding: 4 };
-function IssueTable(props) {
-  const issueRows = props.issues.map(issue => <IssueRow key={issue._id} issue={issue} />);
-  return (
-    <table style={{ borderCollapse: 'collapse' }}>
-      <thead>
-        <tr>
-          <th style={borderedStyle}>Id</th>
-          <th style={borderedStyle}>Status</th>
-          <th style={borderedStyle}>Owner</th>
-          <th style={borderedStyle}>Created</th>
-          <th style={borderedStyle}>Effort</th>
-          <th style={borderedStyle}>Completion Date</th>
-          <th style={borderedStyle}>Title</th>
-        </tr>
-      </thead>
-      <tbody>
-        {issueRows}
-      </tbody>
-    </table>
-  );
-}
-//  为了性能，‘无状态类’使用 无状态函数
-const IssueRow = (props) => (
-  <tr>
-    <td style={borderedStyle}>
-      <Link to={`/issues/${props.issue.id}`} >{props.issue._id.substr(-4)}</Link>
-    </td>
-    <td style={borderedStyle}>{props.issue.status}</td>
-    <td style={borderedStyle}>{props.issue.owner}</td>
-    <td style={borderedStyle}>{props.issue.created.toDateString()}</td>
-    <td style={borderedStyle}>{props.issue.effort}</td>
-    <td style={borderedStyle}>
-      {props.issue.completionDate ? props.issue.completionDate.toDateString() : ' '}
-    </td>
-    <td style={borderedStyle}>{props.issue.title}</td>
-  </tr>
-);
-
-export default class IssueList extends React.Component {
+export default class IssueList extends Component {
   constructor() {
     super();
     this.state = { issues: [] };
-    // this.createTestIssue = this.createTestIssue.bind(this);
-    // setTimeout(this.createTestIssue,2000);//hadle add issue
-    // add bind this for subComponent
     this.createIssue = this.createIssue.bind(this);
-    // this.loadData();
     this.setFilter = this.setFilter.bind(this);
     this.loadDatas = this.loadDatas.bind(this);
     this.loadIM = this.loadIM.bind(this);
@@ -69,10 +26,13 @@ export default class IssueList extends React.Component {
     }
     this.loadData();
   }
-
+  componentDidMount(){
+    this.loadData();
+  }
   setFilter(query) {
     this.props.router.push({ pathname: this.props.location.pathname, query });
   }
+
   loadData() { // get issues
     fetch(`/api/issues${this.props.location.search}`).then(response => {
       if (response.ok) {
@@ -110,7 +70,6 @@ export default class IssueList extends React.Component {
             updateIssue.completionDate = new Date(updateIssue.completionDate);
           }
           const newIssues = this.state.issues.concat(updateIssue);
-// get subArray of array (or subString) by slice(start,end);slice(),get a copy of Array/String
           this.setState({ issues: newIssues });
         });
       } else {
@@ -169,7 +128,7 @@ export default class IssueList extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="issue-list-cont">
         <IssueFilter setFilter={this.setFilter} initFilter={this.props.location.query} />
         <hr />
         <IssueTable issues={this.state.issues} />

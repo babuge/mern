@@ -1,0 +1,44 @@
+.wellcome-cont{
+    width: 100%;
+    min-height: calc(100vh - 45px - 32px);
+    height: calc(100% - 45px - 32px);
+    padding: 20px;
+}
+.wellcomeCard{
+    float: left;
+    width: calc(25% - 15px);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 2px #343a4680
+}
+.wellcomeCard:nth-child(4n){
+    margin-right: 0;
+}
+
+a.wellcome-link {
+    color: #a7a7fa;
+}
+a.wellcome-link:hover{
+    color: #a7a7fadd;
+}
+
+.wellcomePanel{
+    width: 100%;
+    height: calc(20vw);
+    background-color: white;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.wellcomePanel .wellcome-threejs{
+    width: 100%;
+}
+.card-header-bar{
+    width: 100%;
+    height: 32px;
+    background-color: #FFF;
+    border-bottom: 1px solid #ccc;
+    border-radius: 4px 4px 0 0;
+    line-height: 32px;
+    font-size: 16px;
+    padding: 0 12px;
+}

@@ -1,0 +1,39 @@
+.bbg.card{
+    height: auto;
+    min-height: 10vw;
+    background-color: white;
+    padding: 16px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px;
+}
+.bbg.card nav {
+    text-align: left;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 0.2rem;
+}
+
+.bbg.card div {
+    color: #999999;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+}
+.bbg.card .card-details {
+    float: right;
+    color: #2DA9FA;
+}
+
+.bbg.card .card-list {
+    text-align: left;
+    display: flex;
+}
+
+.bbg.card .card-list>span {
+    display: inline-block;
+    vertical-align: top;
+    flex: 1;
+}
+

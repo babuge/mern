@@ -9,7 +9,7 @@ export default class IMRongCloudTest extends React.Component {
     this.props.loadIM();
   }
   render() {
-    const styleString = { backgroundColor: '#aaddaa', height: '80px', width: '180px', display: 'inline-block' };
+    const styleString = { backgroundColor: '#aaddaa', height: '40px', width: '180px',borderRadius: 20, display: 'inline-block' };
     return (
       <div>
         <button style={styleString} onClick={this.selfFun}>IMRongcloud in</button>

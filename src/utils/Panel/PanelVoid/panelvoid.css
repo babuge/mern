@@ -1,0 +1,21 @@
+.bbg.panel-void{
+    width: 100%;
+    height: 100%;
+}
+.bbg.panel-void nav{
+    height: 32px;
+    line-height: 32px;
+    padding: 0 16px;
+}
+.bbg.panel-void nav>.panel-tool{
+    float: right;
+    height: 32px;
+}
+.bbg.panel-void .panel-cont{
+    height: 100%;
+    width: 100%;
+}
+.bbg.panel-void.hasNav .panel-cont{
+    height: calc(100% - 32px);
+    width: 100%;
+}
