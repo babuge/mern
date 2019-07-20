@@ -12,7 +12,6 @@ config.IMRongCloudAccessKey = {
 config.faceContrastHost = 'https://aliyuncs.com';
 config.agrsSecret = 'bbg';
 config.mongodb = {
-  // url: 'babuge:199209hu%2F@47.92.70.234:27017/issuetracker',
   url: '127.0.0.1:27017/issuetracker',
   port: 80,
 };
