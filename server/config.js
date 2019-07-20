@@ -6,8 +6,8 @@ config.faceAccessKey = {
   keyValue: 'YvJN4...xbtq'
 };
 config.IMRongCloudAccessKey = {
-  keyId: 'pkfcgjstpobm8',
-  keyValue: '6InmskhT34'
+  keyId: 'pkfcg...obm8',
+  keyValue: '6In...T34'
 };
 config.faceContrastHost = 'https://aliyuncs.com';
 config.agrsSecret = 'bbg';
