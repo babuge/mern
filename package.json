@@ -12,7 +12,7 @@
     "watch": "webpack-dev-server --hot --inline",
     "eslint": "eslint --ext jsx,js, src server webpack.config.js",
     "dev-all": " npm run watch-server & npm run watch",
-    "dev-all-hook": "npm run watch echo \"npm run start-hook fail\" & npm run start-hook  ",
+    "dev-all-hook": "npm run watch echo \"npm run start-hook fail\" & npm run start-hook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
