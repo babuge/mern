@@ -17,6 +17,8 @@ static/app.bundle.js.map
 static/vendor.bundle.js
 static/vendor.bundle.js.map
 static/data/
+static/img/*.png
+static/img/*.jpg
 # Packages-lock
 package-lock.json
 
